@@ -1,9 +1,14 @@
-import './App.css';
+import CategoryList from "./CategoryList";
+import Navi from "./Navi";
+import ProductList from "./ProductList";
+
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-      <p>Hello </p>
+      <Navi/>
+      <CategoryList/>
+      <ProductList/>
       </header>
     </div>
   );
