@@ -4,8 +4,8 @@ import Navi from "./Navi";
 import ProductList from "./ProductList";
 
 function App() {
-  let titleProduct="Product List"
-  let titleCategory="Category List"
+  let productInfo={title:"Product List"}
+  let categoryInfo={title:"Category List",content:"Content"}
   return (
     <div className="App">
       <header className="App-header">
@@ -15,10 +15,10 @@ function App() {
           </Row>
           <Row>
             <Col xs="3">
-              <CategoryList title={titleCategory}/>
+              <CategoryList info={categoryInfo}/>
             </Col>
             <Col xs="3">
-              <ProductList title={titleProduct}/>
+              <ProductList info={productInfo}/>
             </Col>
           </Row>
         </Container>
