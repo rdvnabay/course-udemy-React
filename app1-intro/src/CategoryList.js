@@ -7,12 +7,16 @@ export default class CategoryList extends Component {
   //   super(props)
   //   this.state:{}
   state = {
-    categories: [
-      { categoryId: 1, categoryName: "Telephone" },
-      { categoryId: 2, categoryName: "Computer" },
-    ]
+    categories: [ ]
   };
-
+ componentDidMount(){
+   this.getCategories()
+ }
+  getCategories=()=>{
+    fetch("http://localhost:3000/categories")
+    .then(response=>response.json())
+    .then(response=>this.setState({categories:response}))
+  }
   render() {
     return (
       <div>
