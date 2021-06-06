@@ -9,6 +9,7 @@ import ProductList from "./ProductList";
 import CartList from "./CartList";
 import NotFound from "./NotFound";
 import Form1Demo from "./Form1Demo";
+import Form2Demo from "./Form2Demo";
 
 export default class App extends Component {
   state = { currentCategory: "", products: [], cart: [] };
@@ -98,6 +99,7 @@ export default class App extends Component {
                     )}
                   />
                    <Route path="/formDemo1" component={Form1Demo} />
+                   <Route path="/formDemo2" component={Form2Demo} />
                   <Route component={NotFound} />
                 </Switch>
               </Col>
