@@ -8,6 +8,7 @@ import CategoryList from "./CategoryList";
 import ProductList from "./ProductList";
 import CartList from "./CartList";
 import NotFound from "./NotFound";
+import Form1Demo from "./Form1Demo";
 
 export default class App extends Component {
   state = { currentCategory: "", products: [], cart: [] };
@@ -85,14 +86,18 @@ export default class App extends Component {
                       />
                     )}
                   />
-                  <Route exact path="/cart" 
+                  <Route
+                    exact
+                    path="/cart"
                     render={(props) => (
                       <CartList
                         {...props}
                         cart={this.state.cart}
                         removeFromCart={this.removeFromCart}
                       />
-                    )} />
+                    )}
+                  />
+                   <Route path="/formDemo1" component={Form1Demo} />
                   <Route component={NotFound} />
                 </Switch>
               </Col>

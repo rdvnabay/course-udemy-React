@@ -10,6 +10,7 @@ import {
   NavLink,
   NavbarText,
 } from "reactstrap";
+import { Link } from "react-router-dom";
 
 export default class Navi extends Component {
   render() {
@@ -21,7 +22,7 @@ export default class Navi extends Component {
           <Collapse navbar>
             <Nav className="mr-auto" navbar>
               <NavItem>
-                <NavLink href="/components/">Components</NavLink>
+                <Link to="formDemo1">Form Demo 1</Link>
               </NavItem>
               <NavItem>
                 <NavLink href="https://github.com/reactstrap/reactstrap">
