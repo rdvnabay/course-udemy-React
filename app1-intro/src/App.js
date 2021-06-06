@@ -5,46 +5,64 @@ import Navi from "./Navi";
 import ProductList from "./ProductList";
 
 export default class App extends Component {
-  state={currentCategory: "",products:[]}
+  state = { currentCategory: "", products: [], cart:[] };
 
-  componentDidMount(){
-    this.getProducts()
+  componentDidMount() {
+    this.getProducts();
   }
-  changeCategory=(category)=>{
-    this.setState({ currentCategory: category.categoryName })
-    this.getProducts(category.id)
+  changeCategory = (category) => {
+    this.setState({ currentCategory: category.categoryName });
+    this.getProducts(category.id);
+  };
+
+
+  addToCart = (product) => {
+    var newCart=this.state.cart;
+    var addedItem=newCart.find(c=>c.product.id===product.id);
+    if(addedItem){
+      addedItem.quantity+=1;
+    }
+    else{
+      newCart.push({product:product,quantity:1});
+    }
+    this.setState({cart:newCart});
   }
- 
-getProducts=(categoryId)=>{
-  let url="http://localhost:3000/products"
-  if(categoryId){
-    url+="?categoryId="+categoryId
+
+  getProducts = (categoryId) => {
+    let url = "http://localhost:3000/products";
+    if (categoryId) {
+      url += "?categoryId=" + categoryId;
+    }  fetch(url)
+      .then((response) => response.json())
+      .then((response) => this.setState({ products: response }));
   }
- 
-  fetch(url)
-  .then(response=>response.json())
-  .then(response=>this.setState({products:response}))
-}
 
   render() {
     let productInfo = { title: "Product List" };
     let categoryInfo = { title: "Category List", content: "Content" };
-    
+
     return (
       <div className="App">
         <header className="App-header">
           <Container>
             <Row>
-              <Navi />
+              <Navi cart={this.state.cart}/>
             </Row>
             <Row>
               <Col xs="3">
-                <CategoryList info={categoryInfo} changeCategory={this.changeCategory} currentCategory={this.state.currentCategory} />
+                <CategoryList
+                  info={categoryInfo}
+                  changeCategory={this.changeCategory}
+                  currentCategory={this.state.currentCategory}
+                />
               </Col>
               <Col xs="9">
-                <ProductList info={productInfo} 
-                currentCategory={this.state.currentCategory}
-                products={this.state.products}/>
+                <ProductList
+                  info={productInfo}
+                  currentCategory={this.state.currentCategory}
+                  products={this.state.products}
+                  addToCart={this.addToCart}
+                />
               </Col>
             </Row>
           </Container>
@@ -53,4 +71,4 @@ getProducts=(categoryId)=>{
     );
   }
 }
-// export default App;
+//export default App;
