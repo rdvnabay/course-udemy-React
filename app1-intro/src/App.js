@@ -28,6 +28,11 @@ export default class App extends Component {
     this.setState({cart:newCart});
   }
 
+  removeFromCart=(product)=>{
+var newCart=this.state.cart.filter(c=>c.product.id!==product.id);
+this.setState({cart:newCart});
+  }
+
   getProducts = (categoryId) => {
     let url = "http://localhost:3000/products";
     if (categoryId) {
@@ -46,7 +51,8 @@ export default class App extends Component {
         <header className="App-header">
           <Container>
             <Row>
-              <Navi cart={this.state.cart}/>
+              <Navi cart={this.state.cart}
+                    removeFromCart={this.removeFromCart}/>
             </Row>
             <Row>
               <Col xs="3">
