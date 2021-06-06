@@ -1,12 +1,16 @@
 import React, { Component } from "react";
+import { Route, Switch } from "react-router";
 import { Col, Container, Row } from "reactstrap";
-import CategoryList from "./CategoryList";
+import alertify from "alertifyjs";
+
 import Navi from "./Navi";
+import CategoryList from "./CategoryList";
 import ProductList from "./ProductList";
-import alertify from 'alertifyjs';
+import CartList from "./CartList";
+import NotFound from "./NotFound";
 
 export default class App extends Component {
-  state = { currentCategory: "", products: [], cart:[] };
+  state = { currentCategory: "", products: [], cart: [] };
 
   componentDidMount() {
     this.getProducts();
@@ -16,33 +20,32 @@ export default class App extends Component {
     this.getProducts(category.id);
   };
 
-
   addToCart = (product) => {
-    var newCart=this.state.cart;
-    var addedItem=newCart.find(c=>c.product.id===product.id);
-    if(addedItem){
-      addedItem.quantity+=1;
+    var newCart = this.state.cart;
+    var addedItem = newCart.find((c) => c.product.id === product.id);
+    if (addedItem) {
+      addedItem.quantity += 1;
+    } else {
+      newCart.push({ product: product, quantity: 1 });
     }
-    else{
-      newCart.push({product:product,quantity:1});
-    }
-    this.setState({cart:newCart});
-    alertify.success(product.productName +' added to cart');
-  }
+    this.setState({ cart: newCart });
+    alertify.success(product.productName + " added to cart");
+  };
 
-  removeFromCart=(product)=>{
-var newCart=this.state.cart.filter(c=>c.product.id!==product.id);
-this.setState({cart:newCart});
-  }
+  removeFromCart = (product) => {
+    var newCart = this.state.cart.filter((c) => c.product.id !== product.id);
+    this.setState({ cart: newCart });
+  };
 
   getProducts = (categoryId) => {
     let url = "http://localhost:3000/products";
     if (categoryId) {
       url += "?categoryId=" + categoryId;
-    }  fetch(url)
+    }
+    fetch(url)
       .then((response) => response.json())
       .then((response) => this.setState({ products: response }));
-  }
+  };
 
   render() {
     let productInfo = { title: "Product List" };
@@ -53,8 +56,10 @@ this.setState({cart:newCart});
         <header className="App-header">
           <Container>
             <Row>
-              <Navi cart={this.state.cart}
-                    removeFromCart={this.removeFromCart}/>
+              <Navi
+                cart={this.state.cart}
+                removeFromCart={this.removeFromCart}
+              />
             </Row>
             <Row>
               <Col xs="3">
@@ -65,12 +70,23 @@ this.setState({cart:newCart});
                 />
               </Col>
               <Col xs="9">
-                <ProductList
-                  info={productInfo}
-                  currentCategory={this.state.currentCategory}
-                  products={this.state.products}
-                  addToCart={this.addToCart}
-                />
+                <Switch>
+                  <Route
+                    exact
+                    path="/"
+                    render={(props) => (
+                      <ProductList
+                        {...props}
+                        info={productInfo}
+                        currentCategory={this.state.currentCategory}
+                        products={this.state.products}
+                        addToCart={this.addToCart}
+                      />
+                    )}
+                  />
+                  <Route exact path="/cart" component={CartList} />
+                  <Route component={NotFound} />
+                </Switch>
               </Col>
             </Row>
           </Container>
