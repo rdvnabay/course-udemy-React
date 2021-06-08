@@ -1,3 +1,4 @@
 export default{
-    currentCategory:{categoryName:"Computer"}
+    currentCategory:{categoryName:"Computer"},
+    categories:[]
 }
