@@ -1,23 +1,21 @@
 import React, { Component } from "react";
 import CategoryList from "../categories/CategoryList";
 import ProductList from "../products/ProductList";
-import {Row,Col} from "reactstrap";
+import {Row,Col,Container} from "reactstrap";
 
 export default class Dashboard extends Component {
   render() {
     return (
       <div>
-        <Row>
-          <Col xs="3">
+      <Row>
+      <Col xs="3">
           <CategoryList/>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs="9">
+      </Col>
+      <Col xs="9">
           <ProductList/>
-          </Col>
-        </Row>
-      </div>
+      </Col>
+      </Row>
+  </div>
     );
   }
 }
